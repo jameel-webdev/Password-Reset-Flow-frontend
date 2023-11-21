@@ -1,7 +1,13 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import { Outlet } from "react-router-dom";
+
 function App() {
   return (
     <>
-      <h1>Vite + React</h1>
+      <div>apppage</div>
+      <ToastContainer />
+      <Outlet />
     </>
   );
 }
