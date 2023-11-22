@@ -1,6 +1,26 @@
 import { Container, Card, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useLogoutMutation } from "../redux-toolkit/slices/userApiSlice"; //mutation from userApiSLice
+import { logout } from "../redux-toolkit/slices/authSlice"; // removing localstorageDate funtn from the authSlice
+
 const Hero = () => {
+  const { userInfo } = useSelector((state) => state.auth);
+  // initiaziling dispatch - bcoz we have regular logout fuctn without any asynchronous request
+  // if its mentioned inside mutation or query we dont need to dispatch
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [logoutApi] = useLogoutMutation(); //we using difrnt variable name so that logout funtn kept untouched
+  const logoutHandler = async () => {
+    try {
+      await logoutApi().unwrap();
+      dispatch(logout());
+      navigate("/");
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <div className=" py-5">
       <Container className="d-flex justify-content-center">
@@ -16,17 +36,38 @@ const Hero = () => {
             , React-router-dom , React-toastify , React-redux-toolkit
           </p>
           <p>
-            <strong>Backend :</strong> Express , MongoDb(mongoose) ,
+            <strong>Backend :</strong> Express , MongoDb(mongoose) , dotenv ,
+            jsonwebtoken , bcryptjs , nodemailer , cookie-parser
+          </p>
+          <p>
+            Once Logout! Reset your password by clicking{" "}
+            <strong>Forgot Password!</strong> while <strong>Signin</strong>
           </p>
           <div className="d-flex">
-            <Link to="/login">
-              <Button variant="primary" className="me-3">
-                Sign In
-              </Button>
-            </Link>
-            <Link to="/register">
-              <Button variant="secondary">Sign Up</Button>
-            </Link>
+            {userInfo ? (
+              <>
+                <Link to="/">
+                  <Button
+                    variant="primary"
+                    className="me-3"
+                    onClick={logoutHandler}
+                  >
+                    Logout
+                  </Button>
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link to="/login">
+                  <Button variant="primary" className="me-3">
+                    Sign In
+                  </Button>
+                </Link>
+                <Link to="/register">
+                  <Button variant="secondary">Sign Up</Button>
+                </Link>
+              </>
+            )}
           </div>
         </Card>
       </Container>

@@ -1,16 +1,51 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import FormContainer from "../components/FormContainer.jsx";
 import { Form, Row, Col, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import Loader from "../components/Loader";
+import { useDispatch, useSelector } from "react-redux";
+import { useRegisterMutation } from "../redux-toolkit/slices/userApiSlice.js";
+import { setUserInfo } from "../redux-toolkit/slices/authSlice.js";
+
 const SignupPage = () => {
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  {
+    /*Fetching data from backend starts here*/
+  }
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const sumbitHandler = (e) => {
+  const [register, { isLoading }] = useRegisterMutation();
+
+  const { userInfo } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (userInfo) {
+      navigate("/");
+    }
+  }, [navigate, userInfo]);
+
+  const sumbitHandler = async (e) => {
     e.preventDefault();
-    console.log(name, email, password);
+    if (name && email && password) {
+      try {
+        const res = register({ name, email, password });
+        dispatch(setUserInfo({ ...res })); // setting userInfo to the localStorage
+        navigate("/");
+        toast.success(`Registration Successful`);
+      } catch (err) {
+        toast.error(err?.data?.message || err.error);
+      }
+    } else {
+      toast.error(`Enter all details to register`);
+    }
   };
+  {
+    /*Fetching data from backend ends here*/
+  }
 
   return (
     <FormContainer>
@@ -43,6 +78,8 @@ const SignupPage = () => {
             onChange={(e) => setPassword(e.target.value)}
           ></Form.Control>
         </Form.Group>
+        {isLoading && <Loader />}
+
         <Button variant="primary" type="submit" className="mt-3">
           Register
         </Button>

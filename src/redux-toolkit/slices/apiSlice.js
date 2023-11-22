@@ -12,5 +12,16 @@ const baseQuery = fetchBaseQuery({
 export const apiSlice = createApi({
   baseQuery,
   tagTypes: ["User"], // used for caching and invalidation
-  endpoints: (builder) => {},
+  endpoints: (builder) => ({}),
 });
+
+// once apiSlice created & devTools inside store is true - we could see this inside Redux extension
+// api : {
+//    queries: {},
+//    mutations: {},
+//    provided: {},
+//    subscriptions: {},
+//    config: {}
+//  }
+// Using this as parent component and all state management get mutated by injecting endpoints inside apiSlice from other children Slices
+// example : inthis project userApiSlice

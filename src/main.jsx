@@ -9,8 +9,6 @@ import store from "./redux-toolkit/store.js";
 import Hero from "./components/Hero";
 import SigninPage from "./pages/SigninPage";
 import SignupPage from "./pages/SignupPage";
-import PrivateRoute from "./components/PrivateRoute.jsx";
-import ProfilePage from "./pages/ProfilePage";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 
@@ -23,12 +21,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             <Route index={true} path="/" element={<Hero />} />
             <Route path="/login" element={<SigninPage />}></Route>
             <Route path="/register" element={<SignupPage />}></Route>
-            {/*Private Route */}
-            <Route path="" element={<PrivateRoute />}>
-              <Route path="/profile" element={<ProfilePage />} />
-              <Route path="/forgotpassword" element={<ForgotPassword />} />
-              <Route path="/resetpassword" element={<ResetPassword />} />
-            </Route>
+            <Route path="/forgotpassword" element={<ForgotPassword />} />
+            <Route path="/resetpassword/:token" element={<ResetPassword />} />
           </Route>
           <Route path="*" element={<Navigate to={"/"} />} />
         </Routes>

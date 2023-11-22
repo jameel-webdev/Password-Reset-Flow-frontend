@@ -1,15 +1,39 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FormContainer from "../components/FormContainer.jsx";
-import { Form, Row, Col, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
-const ResetPassword = () => {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+import { Form, Button } from "react-bootstrap";
+import Loader from "../components/Loader";
+import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { useResetpasswordMutation } from "../redux-toolkit/slices/userApiSlice.js";
 
-  const sumbitHandler = (e) => {
+const ResetPassword = () => {
+  const [password, setPassword] = useState();
+  const { token } = useParams();
+  {
+    /*Fetching data from backend starts here*/
+  }
+  const navigate = useNavigate();
+  const [resetpassword, { isLoading }] = useResetpasswordMutation();
+  const { userInfo } = useSelector((state) => state.auth);
+  useEffect(() => {
+    if (userInfo) {
+      navigate("/");
+    }
+  }, [navigate, userInfo]);
+  const sumbitHandler = async (e) => {
     e.preventDefault();
-    console.log(email, password);
+    try {
+      const res = await resetpassword({ password, token }).unwrap();
+      navigate("/login");
+      toast.success(res.message);
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
+    }
   };
+  {
+    /*Fetching data from backend ends here*/
+  }
 
   return (
     <FormContainer>
@@ -24,6 +48,7 @@ const ResetPassword = () => {
             onChange={(e) => setPassword(e.target.value)}
           ></Form.Control>
         </Form.Group>
+        {isLoading && <Loader />}
         <Button variant="primary" type="submit" className="mt-3">
           Reset password
         </Button>

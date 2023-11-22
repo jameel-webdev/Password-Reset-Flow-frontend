@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { createSlice } from "@reduxjs/toolkit";
 // Slice -- Used to keep certain pieces of state and reducers that take in actions
 // Creating initialstate to check the userInfo from localstorage
@@ -26,6 +27,7 @@ const authSlice = createSlice({
       state.userInfo = null;
       // Removing data from localStorage
       localStorage.removeItem("userInfo");
+      toast.success(`Logged Out Successfully`);
     },
   },
 });
