@@ -22,12 +22,16 @@ const ForgotPassword = () => {
   }, [navigate, userInfo]);
   const sumbitHandler = async (e) => {
     e.preventDefault();
-    try {
-      const res = await forgotpassword({ email }).unwrap();
-      navigate("/");
-      toast.success(res.message);
-    } catch (err) {
-      toast.error(err?.data?.message || err.error);
+    if (email) {
+      try {
+        const res = await forgotpassword({ email }).unwrap();
+        navigate("/");
+        toast.success(res.message);
+      } catch (err) {
+        toast.error(err?.data?.message || err.error);
+      }
+    } else {
+      toast.error(`Enter Your Email`);
     }
   };
   {

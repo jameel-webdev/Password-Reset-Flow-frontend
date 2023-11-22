@@ -23,12 +23,16 @@ const ResetPassword = () => {
   }, [navigate, userInfo]);
   const sumbitHandler = async (e) => {
     e.preventDefault();
-    try {
-      const res = await resetpassword({ password, token }).unwrap();
-      navigate("/login");
-      toast.success(res.message);
-    } catch (err) {
-      toast.error(err?.data?.message || err.error);
+    if (password) {
+      try {
+        const res = await resetpassword({ password, token }).unwrap();
+        navigate("/login");
+        toast.success(res.message);
+      } catch (err) {
+        toast.error(err?.data?.message || err.error);
+      }
+    } else {
+      toast.error(`Enter New Password`);
     }
   };
   {
