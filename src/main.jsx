@@ -22,7 +22,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             <Route path="/login" element={<SigninPage />}></Route>
             <Route path="/register" element={<SignupPage />}></Route>
             <Route path="/forgotpassword" element={<ForgotPassword />} />
-            <Route path="/resetpassword/token" element={<ResetPassword />} />
+            <Route path="/resetpassword/:token" element={<ResetPassword />} />
           </Route>
           <Route path="*" element={<Navigate to={"/"} />} />
         </Routes>
