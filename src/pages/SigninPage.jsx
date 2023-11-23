@@ -38,7 +38,7 @@ const SigninPage = () => {
       // response from the server end up in above mentioned res variable
       dispatch(setUserInfo({ ...res })); // set userInfo to the localStorage
       navigate("/");
-      toast.success(`Logged in Succesfully`);
+      toast.success(res.message);
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }

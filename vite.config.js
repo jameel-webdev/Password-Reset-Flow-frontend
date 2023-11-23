@@ -8,7 +8,8 @@ export default defineConfig({
     port: 3000,
     proxy: {
       "/api": {
-        target: "https://password-reset-flow-9qw8.onrender.com/",
+        // whenever we go to fetch data from server side which starts "/api"
+        target: "https://password-reset-flow-is8m.onrender.com",
         changeOrigin: true,
       },
     },

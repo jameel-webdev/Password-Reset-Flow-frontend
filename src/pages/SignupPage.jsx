@@ -35,7 +35,7 @@ const SignupPage = () => {
         const res = register({ name, email, password });
         dispatch(setUserInfo({ ...res })); // setting userInfo to the localStorage
         navigate("/");
-        toast.success(`Registration Successful`);
+        toast.success(`Registration Succeful`);
       } catch (err) {
         toast.error(err?.data?.message || err.error);
       }
