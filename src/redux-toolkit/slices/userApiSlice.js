@@ -1,5 +1,5 @@
 import { apiSlice } from "./apiSlice";
-const USERS_URL = "/api/users";
+const USERS_URL = "https://password-reset-flow-is8m.onrender.com/api/users";
 
 // injecting endpoints into the @ apiSlice = createApi.endpoints
 export const usersApiSlice = apiSlice.injectEndpoints({
