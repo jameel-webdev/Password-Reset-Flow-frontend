@@ -32,7 +32,7 @@ const SignupPage = () => {
     e.preventDefault();
     if (name && email && password) {
       try {
-        const res = register({ name, email, password });
+        const res = await register({ name, email, password });
         dispatch(setUserInfo({ ...res })); // setting userInfo to the localStorage
         navigate("/");
         toast.success(`Registration Succeful`);
