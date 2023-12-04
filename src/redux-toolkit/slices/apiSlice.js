@@ -7,6 +7,7 @@ const baseQuery = fetchBaseQuery({
   // baseUrl usualy takes the URL Path ie. something like  "http://localhost:3000/api"
   // but in this project we have used proxy in vite.config
   baseUrl: "",
+  credentials: "include",
 });
 
 export const apiSlice = createApi({
