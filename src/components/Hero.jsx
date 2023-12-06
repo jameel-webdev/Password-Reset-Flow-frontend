@@ -12,7 +12,7 @@ const Hero = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [logoutApi] = useLogoutMutation(); //we using difrnt variable name so that logout funtn kept untouched
+  const [logoutApi, { isLoading }] = useLogoutMutation(); //we using difrnt variable name so that logout funtn kept untouched
   const logoutHandler = async () => {
     try {
       await logoutApi().unwrap();
