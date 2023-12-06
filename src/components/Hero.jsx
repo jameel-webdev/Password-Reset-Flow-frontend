@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useLogoutMutation } from "../redux-toolkit/slices/userApiSlice"; //mutation from userApiSLice
 import { logout } from "../redux-toolkit/slices/authSlice"; // removing localstorageDate funtn from the authSlice
+import Loader from "../components/Loader";
 
 const Hero = () => {
   const { userInfo } = useSelector((state) => state.auth);
@@ -44,6 +45,8 @@ const Hero = () => {
             <strong>Forgot Password!</strong> while <strong>Signin</strong>
           </p>
           <div className="d-flex">
+            {isLoading && <Loader />}
+
             {userInfo ? (
               <>
                 <Link to="/">
